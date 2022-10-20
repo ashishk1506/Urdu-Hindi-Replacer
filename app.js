@@ -14,64 +14,61 @@ app.use(bodyParser.json())
 
 const PORT = process.env.PORT || 4000
 
+app.use('/user_controller',require('./routes/dbRoute'))
+app.use('/user',require('./routes/authRoute'))
+
 app.get('/',function(req,res){
     res.render('index',{text_new:[]})
 })
 
 app.post('/convert', function(req,res) {
-    let text;
-    let text_split;
-    text = req.body.word;
+   
+    let text = req.body.word;
     // text = "अफसर अफसरों दर्पण"
-    text_split = text.split(" "); //splits the text into array
-    console.log(text_split)
-    let text_length  
-    text_length = Object.keys(text_split).length; // length of array
-    db.query("SELECT * FROM urdutohindi", function (err,result)
-    {
-        if(err)
-        throw err
-        var length_table = Object.keys(result).length
-        var newstr = []; 
-          //to store new string
-        for(var j=0; j < text_length; j++)
+    let text_split = text.split(" "); //splits the text into array
+    let text_length = Object.keys(text_split).length; // length of array
+     try{
+        db.query("SELECT * FROM urdutohindi", function (err,result)
         {
-            datas = text_split[j]
-            var check = 0
-            for(var i=0 ; i < length_table; i++)
+            let length_table = Object.keys(result).length
+            let newstr = []; 
+              //to store new string
+            for(var j=0; j < text_length; j++)
             {
-                if(result[i].Urdu === datas)   //if found in databse add translated word to newstr
+                let datas = text_split[j]
+                let check = 0
+                for(let i=0 ; i < length_table; i++)
                 {
-                    var newarr = result[i].Hindi.split('/')
-                    newstr.push({
-                        hindi : newarr,
-                        urdu : result[i].Urdu,
-                        status : 1
-                    })
-                    check = 1
-                    break
+                    if(result[i].Urdu === datas)   //if found in databse add translated word to newstr
+                    {
+                        let newarr = result[i].Hindi.split('/')
+                        newstr.push({
+                            hindi : newarr,
+                            urdu : result[i].Urdu,
+                            status : 1
+                        })
+                        check = 1
+                        break
+                    }
                 }
+                if(check == 0)  //if not found add the old word to newstr
+                {
+                   let newarr = []
+                   newarr.push(datas)
+                   newstr.push({
+                       hindi : newarr,
+                       urdu : " ",
+                       status: 0
+                   })
+                }       
             }
-            if(check == 0)  //if not found add the old word to newstr
-            {
-               var newdata = []
-               newdata.push(datas)
-               newstr.push({
-                   hindi : newdata,
-                   urdu : " ",
-                   status: 0
-               })
-            }       
-        }
-        console.log(newstr)
-         res.render('index',{text_new:newstr})
-    })
+            console.log(newstr)
+             res.render('index',{text_new:newstr})
+        })
+     }catch(e){
+        console.log(e)
+     }
 })
-
-app.use('/user_controller',require('./routes/dbRoute'))
-
-app.use('/user',require('./routes/authRoute'))
-
 
 // setting server
 app.listen(PORT, () => {
