@@ -18,12 +18,14 @@ app.use(bodyParser.json())
 app.use('/user_controller',require('./routes/dbRoute'))
 app.use('/user',require('./routes/authRoute'))
 
+app.use('/user_controller',require('./routes/dbRoute'))
+app.use('/user',require('./routes/authRoute'))
+
 app.get('/',function(req,res){
     res.render('index',{text_new:[]})
 })
 
 app.post('/convert', function(req,res) {
-   
     let inputTest = String(req.body.word);
     // text = "अफसर अफसरों दर्पण करीब"
     let inputArr = inputTest.split(" "); //splits the text into array
