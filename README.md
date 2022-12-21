@@ -2,6 +2,12 @@
 
 Replaces the occurance of words with urdu origin to its hindi translation with cutom dictionary.
 
+vi
+
+https://user-images.githubusercontent.com/63970193/208926061-074e4de6-e5a2-4bc4-a64e-4e27c504aa85.mp4
+
+deo
+
 ---
 ## Requirements
 
