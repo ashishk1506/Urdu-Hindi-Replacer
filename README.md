@@ -2,9 +2,8 @@
 
 Replaces the occurance of words with urdu origin to its hindi translation with cutom dictionary.
 
-
-![Demo](link)https://user-images.githubusercontent.com/63970193/208926061-074e4de6-e5a2-4bc4-a64e-4e27c504aa85.mp4
-
+<video src="https://user-images.githubusercontent.com/63970193/208926061-074e4de6-e5a2-4bc4-a64e-4e27c504aa85.mp4" controls="controls" style="max-width: 730px;">
+</video>
 
 ---
 ## Requirements
@@ -40,9 +39,8 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 
 ## Configure app
 
-create .env file 
-###
-add env variables as 
+
+### create .env file 
     DB_DATABASE_SSL= 
     DB_HOST_SSL=
     DB_PASS_SSL=
